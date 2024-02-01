@@ -8,14 +8,6 @@ struct node{
 
 typedef struct node Node;
 
-void printInOrder(Node *root){
-    if(root == NULL){
-        return;
-    }
-    printInOrder(root->left);
-    cout<< root->data << " ";
-    printInOrder(root->right);
-}
 
 Node *createNode(int val){
     Node *newNode = new Node();
@@ -37,6 +29,33 @@ Node *insert(Node *node, int val){
     }
     return node;
 
+}
+
+void printInOrder(Node *root){
+    if(root == NULL){
+        return;
+    }
+    printInOrder(root->left);
+    cout<< root->data << " ";
+    printInOrder(root->right);
+}
+
+void printPreOrder(Node *root){
+    if(root == NULL){
+        return;
+    }
+    cout<< root->data << " ";
+    printPreOrder(root->left);
+    printPreOrder(root->right);
+}
+
+void printPostOrder(Node *root){
+    if(root == NULL){
+        return;
+    }
+    printPostOrder(root->left);
+    printPostOrder(root->right);
+    cout<< root->data << " ";
 }
 
 bool SearchUTL(Node *node, int val){
