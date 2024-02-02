@@ -32,7 +32,7 @@ Node* insert(Node* head, int val) {
 void printValLL(struct node* head) {
     struct node* l;
     for (l = head; l != NULL; l = l->next)
-        printf("%d ", l->data);
+        cout << head->data << " ";
 }
 
 int lengthLL(struct node* head){
@@ -47,7 +47,7 @@ void printValReverseLL(struct node* head){
 	if(!head)
 		return;
 	printValReverseLL(head->next);
-	printf("%d ", head->data);
+	cout << head->data << " ";
 }
 
 int getValAtHeadLL(struct node* head){
