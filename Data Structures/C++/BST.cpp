@@ -58,23 +58,23 @@ void printPostOrder(Node *root){
     cout<< root->data << " ";
 }
 
-bool SearchUTL(Node *node, int val){
-    if(node == NULL){
+bool SearchUTL(Node *root, int val){
+    if(root == NULL){
         return false;
     }
-    else if (node->data == val){
+    else if (root->data == val){
         return true;
     }
-    else if (val < node->data){
-        return SearchUTL(node->left, val);
+    else if (val < root->data){
+        return SearchUTL(root->left, val);
     }
     else{
-        return SearchUTL(node->right, val);
+        return SearchUTL(root->right, val);
     }
 }
 
-void Search(Node *node, int val){
-    if(SearchUTL(node, val)){
+void Search(Node *root, int val){
+    if(SearchUTL(root, val)){
         cout<<"Found"<<endl;
     }
     else{
@@ -82,29 +82,29 @@ void Search(Node *node, int val){
     }
 }
 
-int findMin(Node *node){
-    if(node == NULL){
+int findMin(Node *root){
+    if(root == NULL){
         printf("Tree is empty");
         return -1;
     }
-    else if (node->left == NULL){
-        return node->data;
+    else if (root->left == NULL){
+        return root->data;
     }
     else{
-        return findMin(node->left);
+        return findMin(root->left);
     }
 }
 
-int findMax(Node *node){
-    if(node == NULL){
+int findMax(Node *root){
+    if(root == NULL){
         printf("Tree is empty");
         return -1;
     }
-    else if (node->left == NULL){
-        return node->data;
+    else if (root->right == NULL){
+        return root->data;
     }
     else{
-        return findMax(node->right);
+        return findMax(root->right);
     } 
 }
 
@@ -113,8 +113,26 @@ int heigthOfTree(Node *root){
         return 0;
     }
     int leftHeigth = heigthOfTree(root->left);
-    int rightHeigth = heigthOfTree(root->left);
+    int rightHeigth = heigthOfTree(root->right);
     return max(leftHeigth, rightHeigth) + 1;
+}
+
+void printCurrentLevel(Node* root, int level){
+    if (root == NULL)
+        return;
+    if (level == 1)
+        cout << root->data << " ";
+    else if (level > 1) {
+        printCurrentLevel(root->left, level - 1);
+        printCurrentLevel(root->right, level - 1);
+    }
+}
+
+void printLevelOrder(Node* root){
+    int h = heigthOfTree(root);
+    int i;
+    for (i = 1; i <= h; i++)
+        printCurrentLevel(root, i);
 }
 
 int main(){
@@ -128,4 +146,5 @@ int main(){
     root = insert(root, 70);
     root = insert(root, 80);
     root = insert(root, 100);
+    return 0;
 }
