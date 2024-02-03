@@ -39,8 +39,8 @@ int main(){
     for(int  i=0;i<n;i++){
         cin >> arr[i];
     }
-	quickSort(arr, 0, n - 1);
+	QuickSort(arr, 0, n - 1);
 	cout << "Sorted array: \n"; 
-	PrintArray(arr, n); 
+	PrintArray(arr, n);
 	return 0; 
 }
