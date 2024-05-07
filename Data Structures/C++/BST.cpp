@@ -58,27 +58,16 @@ void printPostOrder(Node *root){
     cout<< root->data << " ";
 }
 
-bool SearchUTL(Node *root, int val){
-    if(root == NULL){
-        return false;
+Node *Search(Node *root, int val){
+    if(root == NULL || root->data == val){
+        return root;
     }
-    else if (root->data == val){
-        return true;
-    }
-    else if (val < root->data){
-        return SearchUTL(root->left, val);
+    
+    if (val < root->data){
+        return Search(root->left, val);
     }
     else{
-        return SearchUTL(root->right, val);
-    }
-}
-
-void Search(Node *root, int val){
-    if(SearchUTL(root, val)){
-        cout<<"Found"<<endl;
-    }
-    else{
-        cout<<"Not found"<<endl;
+        return Search(root->right, val);
     }
 }
 
@@ -135,6 +124,86 @@ void printLevelOrder(Node* root){
         printCurrentLevel(root, i);
 }
 
+Node* Successor(Node* root, int X) {
+    // Find the node with value X in the BST
+    Node* currentNode = Search(root, X);
+    
+    if (currentNode == nullptr)
+        return nullptr;
+    
+    // Case 1: If currentNode has a right subtree
+    if (currentNode->right != nullptr) {
+        // Find the leftmost node in the right subtree (smallest value in the right subtree)
+        Node* successor = currentNode->right;
+        while (successor->left != nullptr) {
+            successor = successor->left;
+        }
+        return successor;
+    }
+    
+    // Case 2: If currentNode does not have a right subtree
+    // Traverse from root to currentNode to find the inorder successor
+    Node* successor = nullptr;
+    Node* ancestor = root;
+    while (ancestor != currentNode) {
+        if (currentNode->data < ancestor->data) {
+            successor = ancestor;
+            ancestor = ancestor->left;
+        } else {
+            ancestor = ancestor->right;
+        }
+    }
+    
+    return successor;
+}
+
+Node* inorderPredecessor(Node* root, int X) {
+    // Find the node with value X in the BST
+    Node* currentNode = Search(root, X);
+
+    if (currentNode == nullptr)
+        return nullptr;
+
+    // Case 1: If currentNode has a left subtree
+    if (currentNode->left != nullptr) {
+        // Find the rightmost node in the left subtree (largest value in the left subtree)
+        Node* predecessor = currentNode->left;
+        while (predecessor->right != nullptr) {
+            predecessor = predecessor->right;
+        }
+        return predecessor;
+    }
+
+    // Case 2: If currentNode does not have a left subtree
+    // Traverse from root to currentNode to find the inorder predecessor
+    Node* predecessor = nullptr;
+    Node* ancestor = root;
+    while (ancestor != currentNode) {
+        if (currentNode->data > ancestor->data) {
+            predecessor = ancestor;
+            ancestor = ancestor->right;
+        } else {
+            ancestor = ancestor->left;
+        }
+    }
+
+    return predecessor;
+}
+
+Node* LCA(Node* root, int A, int B) {
+    if (root == nullptr)
+        return nullptr;
+
+    if (root->data > A && root->data > B)
+        return LCA(root->left, A, B);
+    else if (root->data < A && root->data < B)
+        return LCA(root->right, A, B);
+    else
+        return root;
+}
+
+
+/*Driver Code*/
 int main(){
     Node *root = NULL;
     root = insert(root, 50);
